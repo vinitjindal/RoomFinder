@@ -1,6 +1,15 @@
 import React,{ Component } from 'react';
-import Search from './Search';
-import StarRatingComponent from 'react-star-rating-component';
+//import Search from './Search';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+
 
 
 class FindHere extends Component{
@@ -32,28 +41,50 @@ class FindHere extends Component{
     this.setState({
       HomeList
     })
+  };
+
+  const styles = {
+    card: {
+        maxWidth: 345,
+      },
+    media: {
+      height: 140,
+    }
   }
   render(){
+    const  classes  = this.styles.card;
     const { HomeList } = this.state;
     const homeList = HomeList?(HomeList.map(arr=>{
       return(
-        <div className=" post-card post card container" key={ arr.id }>
-          <img src={ arr.img } alt = "rooms"/>
-          <div className = "Address">
-            <p> Address : { arr.Address } { arr.city }  </p>
-            <p> Contact : { arr.Mobno }   </p>
-            <StarRatingComponent emptyStarColor={ "#BDB76B" }/>
+        <div key={ arr.id }>
+            <Card className={ classes.card }>
+              <CardActionArea>
+                  <CardMedia image={ arr.img } title="room pic"/>
+                  <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        Address : { arr.Address }  Contact : { arr.Mobno }
+                      </Typography>
+                      <Typography component="p">
+                          3 single bed rooms are available with A.C.
+                      </Typography>
+                  </CardContent>
+                  <CardActions>
+                      <Button size="small" color="primary"> Book </Button>
+                  </CardActions>
+               </CardActionArea>
+            </Card>
           </div>
-        </div>
       )
     })):(<p> Loading </p>);
+
     return(
       <div>
        { homeList }
-       <Search Searchinfo = { this.SearchPg }/>
       </div>
     )
   }
 }
-
-export default FindHere;
+FindHere.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+export default withStyles(this.styles)(FindHere);

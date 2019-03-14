@@ -31,3 +31,6 @@ img{
 form{
   width: 300px;
 }
+.card{
+  maxWidth: 345;
+}
