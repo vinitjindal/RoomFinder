@@ -12,25 +12,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-img{
-  float: left;
-  height: 150px;
-  width: 150px;
-  margin-right: 20px;
-  margin-top: 20px;
-}
-.post-card{
-  height:300px;
-  width: 600px;
-  margin-top: 80px;
-  margin-left: 450px;
-}
-.Address{
-  text-align: right;
-}
-form{
-  width: 300px;
-}
-.card{
-  maxWidth: 345;
+.roomList{
+  margin-left: 500px;
+  padding-top: 40px;
 }

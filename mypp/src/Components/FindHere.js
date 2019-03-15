@@ -1,5 +1,5 @@
 import React,{ Component } from 'react';
-//import Search from './Search';
+import Search from './Search';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -11,10 +11,19 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 
+const styles = {
+  card: {
+    maxWidth: 545,
+  },
+  media: {
+    height: 240,
+  },
+}
+
 
 class FindHere extends Component{
   state={
-    HomeList:[
+    homeList:[
       {
         id:1,
         state:"Punjab",
@@ -25,8 +34,8 @@ class FindHere extends Component{
       },
       {
         id:2,
-        state:"Punjab",
-        city:"Rajpura",
+        state:"Haryana",
+        city:"Ambala",
         Address:"House no.5",
         img:"http://4.bp.blogspot.com/-RSAdi3NMMs8/VakWj_znRcI/AAAAAAAAAMI/lp19iktRyCw/s1600/Rent%2Broom%2Bstockholm.jpg",
         Mobno:9561959458,
@@ -34,35 +43,27 @@ class FindHere extends Component{
     ]
   }
 
-  SearchPg=(info)=>{
-    let HomeList = this.state.HomeList.filter(arr=>{
+  searchPg=(info)=>{
+    let homeList = this.state.homeList.filter(arr=>{
       return arr.city === info.city && arr.state === info.state;
     })
     this.setState({
-      HomeList
+      homeList
     })
-  };
-
-  const styles = {
-    card: {
-        maxWidth: 345,
-      },
-    media: {
-      height: 140,
-    }
   }
+
   render(){
-    const  classes  = this.styles.card;
-    const { HomeList } = this.state;
-    const homeList = HomeList?(HomeList.map(arr=>{
+    const { homeList } = this.state;
+    const HomeList = homeList?(homeList.map(arr=>{
       return(
-        <div key={ arr.id }>
-            <Card className={ classes.card }>
+        <div className="roomList"  key={ arr.id }>
+            <Card className={ this.props.classes.card }>
               <CardActionArea>
-                  <CardMedia image={ arr.img } title="room pic"/>
+                  <CardMedia className={ this.props.classes.media } image = { arr.img } title="room pic"/>
                   <CardContent>
                       <Typography gutterBottom variant="h5" component="h2">
-                        Address : { arr.Address }  Contact : { arr.Mobno }
+                        Address : { arr.Address } { arr.city }  { arr.state },
+                        Contact : { arr.Mobno }
                       </Typography>
                       <Typography component="p">
                           3 single bed rooms are available with A.C.
@@ -75,11 +76,11 @@ class FindHere extends Component{
             </Card>
           </div>
       )
-    })):(<p> Loading </p>);
-
+    })):(<p> Loading </p>)
     return(
       <div>
-       { homeList }
+       <Search searchInfo={ this.searchPg } />
+       { HomeList }
       </div>
     )
   }
@@ -87,4 +88,4 @@ class FindHere extends Component{
 FindHere.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-export default withStyles(this.styles)(FindHere);
+export default withStyles(styles)(FindHere);
