@@ -12,7 +12,44 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-.roomList{
-  margin-left: 500px;
+.roomlist{
+  margin-left: 500px ;
   padding-top: 40px;
+}
+.fa-home{
+  padding-top: 15px;
+  padding-left: 20px;
+}
+.fa-envelope{
+  margin-right: 5px;
+  font-size:26px;
+  margin-top: 10px;
+
+
+}
+.fa-globe{
+  margin-right: 5px;
+  font-size:26px;
+  margin-top: 10px;
+}
+.fa-search {
+  margin-right: 5px;
+  font-size:26px;
+  margin-top: 10px;
+
+}
+.fa-sign-in{
+  margin-right: 5px;
+  font-size:26px;
+  margin-top: 10px;
+}
+.brand-logo{
+  font-family: monospace;
+  font-style: italic;
+}
+.nav-wrapper{
+  height: 70px;
+}
+li{
+  font-style: italic;
 }

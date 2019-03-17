@@ -56,7 +56,7 @@ class FindHere extends Component{
     const { homeList } = this.state;
     const HomeList = homeList?(homeList.map(arr=>{
       return(
-        <div className="roomList"  key={ arr.id }>
+        <div className="roomlist"  key={ arr.id }>
             <Card className={ this.props.classes.card }>
               <CardActionArea>
                   <CardMedia className={ this.props.classes.media } image = { arr.img } title="room pic"/>
@@ -79,8 +79,9 @@ class FindHere extends Component{
     })):(<p> Loading </p>)
     return(
       <div>
-       <Search searchInfo={ this.searchPg } />
-       { HomeList }
+        <div>
+          { HomeList }
+        </div>
       </div>
     )
   }

@@ -1,9 +1,9 @@
 import React,{ Component } from 'react';
-import PropTypes from 'prop-types';
+/*import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import TextField from '@material-ui/core/TextField';*/
 
-const styles = theme => ({
+/*const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -14,7 +14,7 @@ const styles = theme => ({
     width: 250,
   },
 })
-
+*/
 class Search extends Component{
   state={
     state:" ",
@@ -40,23 +40,12 @@ class Search extends Component{
   }
   render(){
     return(
-      <div className = { this.props.classes.container }>
-          <form onSubmit={ this.handleSubmit }>
-            <TextField label="State:" id="state" className={ this.props.classes.textField }
-             margin="normal" rows = '1' multiline	='false' autoFocus="true" onChange={ this.handleChange }/>
-            <TextField label="City:" id="city" className={ this.props.classes.textField }
-            margin="normal" rows = '1' multiline	='true' onChange={ this.handleChange }/>
-           </form>
-        {/*<form onSubmit={ this.handleSubmit }>
-          State : <input type="text" id="state" onChange={ this.handleChange } placeholder="For now enter with first letter caps" />
-          City : <input type="text" id="city" onChange={ this.handleChange } placeholder="For now enter with first letter caps"/>
-          <input type="submit" value="Search"/>
-        </form>*/}
-      </div>
+				<form>
+					<input type="text" autofocus  placeholder="Search for state and city e.g punjab patiala"/>
+					<span><input type="submit" value="search"/></span>
+				</form>
     )
   }
 }
-Search.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-export default withStyles(styles)(Search);
+
+export default Search;
