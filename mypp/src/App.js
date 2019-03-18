@@ -3,6 +3,8 @@ import Navbar from './Components/Navbar';
 import { Route,Switch,BrowserRouter } from 'react-router-dom';
 import Home from './Components/Home';
 import FindHere from './Components/FindHere';
+//import Login from './Components/Login';
+
 
 class App extends Component {
   render() {
@@ -13,7 +15,8 @@ class App extends Component {
             <Switch>
               <Route exact path='/' component={ Home }/>
               <Route path='/findhere' component={ FindHere }/>
-            </Switch>
+              <Route path='/home/login' component={ Home }/>
+             </Switch>
         </div>
       </BrowserRouter>
     );

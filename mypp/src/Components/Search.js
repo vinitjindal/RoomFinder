@@ -1,51 +1,37 @@
-import React,{ Component } from 'react';
-/*import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';*/
+import React, { Component } from 'react';
+import Modal from 'react-awesome-modal';
 
-/*const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 250,
-  },
-})
-*/
-class Search extends Component{
+export default class Search extends Component {
   state={
-    state:" ",
-    city:" "
+    state:null,
+    city:null,
   }
-
   handleSubmit=(e)=>{
     e.preventDefault();
-    this.props.searchInfo(this.state);
-    //console.log(this.state.city);
-
+    this.props.addInfo(this.state);
   }
-  /*componentDidUpdate(){
-    this.props.searchInfo(this.state);
-  }*/
+
   handleChange=(e)=>{
-    //console.log("changing handle");
     this.setState({
       [e.target.id]:e.target.value,
-      [e.target.id]:e.target.value
+      [e.target.id]:e.target.value,
     })
-    console.log(this.state)
   }
-  render(){
-    return(
-				<form>
-					<input type="text" autofocus  placeholder="Search for state and city e.g punjab patiala"/>
-					<span><input type="submit" value="search"/></span>
-				</form>
-    )
-  }
-}
 
-export default Search;
+    render() {
+        return (
+            <section>
+                <Modal visible={this.props.state} width="400" height="300" effect="fadeInUp" onClickAway={() =>  this.props.closeSearch()  }>
+                    <div>
+                        <form onSubmit={ this.handlesubmit }>
+                          <input type="text" id='state' placeholder="Enter state" onChange={ this.handleChange }/>
+                          <input type="text" id='city' placeholder="Enter city" onChange={ this.handleChange }/>
+                          <input type="submit" value=" submit "/>
+                        </form>
+                        <a href="javascript:void(0);" onClick={() => { this.props.closeSearch() }}>Close</a>
+                    </div>
+                </Modal>
+            </section>
+        );
+    }
+}

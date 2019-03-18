@@ -53,3 +53,7 @@ code {
 li{
   font-style: italic;
 }
+form{
+  max-width: 500px;
+  padding-left: 150px;
+}

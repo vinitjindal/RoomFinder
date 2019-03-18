@@ -1,12 +1,37 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+//import Modal from 'react-awesome-modal';
+import Login from './Login';
+
 
 class Navbar extends Component {
 
+      state = {
+          VisibleSearch:false,
+          VisibleLogin : false,
+      }
 
+
+  openSearch=()=>{
+    this.setState({
+        VisibleSearch : true
+    });
+  }
+
+ openLogin=()=>{
+   this.setState({
+       VisibleLogin : true
+   });
+ }
+
+  closeLogin=()=> {
+      this.setState({
+          VisibleLogin : false
+      });
+  }
 
   render() {
-    return (
+     return (
       <div>
           <nav className=" nav-wrapper #01579b light-blue darken-2">
             <div>
@@ -14,14 +39,16 @@ class Navbar extends Component {
                 <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
                 <ul className="right hide-on-med-and-down">
 
-                  <li> <Link to='/About'><i className="fa fa-globe"></i>AboutUs</Link> </li>
-                  <li> <Link to='/contact'><i className="fa fa-envelope"></i>Contact</Link> </li>
-                  <li> <Link to='/FindHere'><i className="fa fa-search"></i>Find Here</Link> </li>
-                  <li> <Link to='/login'><i className="fa fa-sign-in"></i>login</Link> </li>
-
-                </ul>
+                    <li> <Link to='/About'><i className="fa fa-globe"></i>AboutUs</Link> </li>
+                    <li> <Link to='/contact'><i className="fa fa-envelope"></i>Contact</Link> </li>
+                    <li onClick={ ()=> this.openSearch()  }> <Link to='/FindHere'><i className="fa fa-search"></i>Find Here</Link> </li>
+                    <li onClick={ ()=> this.openLogin()  }> <Link to='/home/login'><i className="fa fa-sign-in"></i>login</Link> </li>
+              </ul>
             </div>
           </nav>
+          <Login closeLogin = { this.closeLogin } state1 = { this.state.VisibleLogin }/>
+
+
           <ul className="sidenav" id="mobile-demo">
             <li>
               <Link to='/About'>AboutUs</Link>
