@@ -18,6 +18,15 @@ const styles = {
   media: {
     height: 240,
   },
+  root: {
+  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+  border: 0,
+  borderRadius: 3,
+  boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  color: 'white',
+  height: 48,
+  padding: '0 30px',
+},
 }
 
 
@@ -45,11 +54,7 @@ class FindHere extends Component{
 
   }
 
-  componentDidMount(){
-    this.setState({
-      VisibleSearch:true
-    })
-  }
+
 
   closeSearch=()=>{
     this.setState({
@@ -66,11 +71,17 @@ class FindHere extends Component{
     })
   }
 
+  handleClick=()=>{
+    this.setState({
+      VisibleSearch:true,
+    })
+  }
+
   render(){
     const { homeList } = this.state;
     const HomeList = homeList?(homeList.map(arr=>{
       return(
-        <div className="roomlist"  key={ arr.id }>
+        <div className='roomlist' key={ arr.id }>
             <Card className={ this.props.classes.card }>
               <CardActionArea>
                   <CardMedia className={ this.props.classes.media } image = { arr.img } title="room pic"/>
@@ -92,9 +103,12 @@ class FindHere extends Component{
       )
     })):(<p> Loading </p>)
     return(
-      <div>
-        <Search closeSearch={ this.closeSearch } state={ this.state.VisibleSearch }/>
-        <div>
+      <div className=' row container-fluid'>
+        <div className=' col1 col-sm-3'>
+          <Button className={this.props.classes.root} onClick={ ()=>this.handleClick() } >Search here..</Button>
+          <Search closeSearch={ this.closeSearch } state={ this.state.VisibleSearch } addInfo={ this.searchPg }/>
+        </div>
+        <div className=' col2 col-sm-9'>
           { HomeList }
         </div>
       </div>

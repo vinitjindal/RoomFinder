@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Modal from 'react-awesome-modal';
 
-export default class Search extends Component {
+
+ class Search extends Component {
   state={
     state:null,
     city:null,
@@ -22,16 +23,17 @@ export default class Search extends Component {
         return (
             <section>
                 <Modal visible={this.props.state} width="400" height="300" effect="fadeInUp" onClickAway={() =>  this.props.closeSearch()  }>
+                    <div className="bg-image"></div>
                     <div>
-                        <form onSubmit={ this.handlesubmit }>
+                        <form onSubmit={ this.handleSubmit } >
                           <input type="text" id='state' placeholder="Enter state" onChange={ this.handleChange }/>
                           <input type="text" id='city' placeholder="Enter city" onChange={ this.handleChange }/>
-                          <input type="submit" value=" submit "/>
+                          <input type="submit" value=" Hit Enter " onClick={ ()=>this.props.closeSearch() }/>
                         </form>
-                        <a href="javascript:void(0);" onClick={() => { this.props.closeSearch() }}>Close</a>
                     </div>
                 </Modal>
             </section>
         );
     }
 }
+export default Search;
