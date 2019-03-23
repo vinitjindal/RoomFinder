@@ -39,17 +39,23 @@ class Navbar extends Component {
           </nav>
           <Login closeLogin = { this.closeLogin } state1 = { this.state.VisibleLogin }/>
 
-          <ul className="sidenav #90caf9 blue lighten-3 " id="mobile-nav">
+          <ul className="sidenav" id="mobile-nav">
+
             <li>
               <Link to='/About'><i className="fa fa-globe"></i>AboutUs</Link>
             </li>
+
             <li>
               <Link to='/contact'><i className="fa fa-envelope"></i>Contact</Link>
             </li>
+
             <li>
               <Link to='/FindHere'><i className="fa fa-search"></i>Find</Link>
             </li>
-            <li onClick={ ()=> this.openLogin()  }> <Link to='/home/login'><i className="fa fa-sign-in"></i>login</Link> </li>
+
+            <li onClick={ ()=> this.openLogin()  }>
+             <Link to='/home/login'><i className="fa fa-sign-in"></i>login</Link>
+            </li>
 
           </ul>
       </div>

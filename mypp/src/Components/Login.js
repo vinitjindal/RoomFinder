@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import Modal from 'react-awesome-modal';
+import './Login.css';
+
 
 export default class Login extends Component {
     /*constructor(props) {
-        super(props);
+          super(props);
         this.state = {
             visible : false
         }
@@ -26,16 +28,16 @@ export default class Login extends Component {
 
     render() {
         return (
-                <Modal visible={this.props.state1 } width="600" height="500" effect="fadeInDown" onClickAway={() =>  this.props.closeLogin()  }>
-                    <div>
-                        <h1> Login As a Vendor.. </h1>
+                <Modal visible={this.props.state1 } width="400" height="300" effect="fadeInDown" onClickAway={() =>  this.props.closeLogin()  }>
+                    <div className='login'>
+                        <h4> Login As a Vendor.. </h4>
                         <form>
-                          <input type="text" className='username' />
-                          <input type="password"/>
-                          <input type="button" value="SignIn"/>
+                          <i className="fa fa-user"><input type="text" placeholder=" username " autofocus /></i>
+                          <i className="fa fa-key"><input type="password" placeholder=" password "/></i>
+                          <input type="button" value="Sign In"/>
                         </form>
-                        <a href="javascript:void(0);" onClick={() => { this.props.closeLogin() }}>Close</a>
-                    </div>
+                        <a href="#">Not Have Account Yet ? Sign Up..</a>
+                     </div>
                 </Modal>
         );
     }

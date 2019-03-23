@@ -52,9 +52,6 @@ code {
 li{
   font-style: italic;
 }
-.sidenav{
-  padding: 20px;
-}
 .col1{
    padding-top: 20px;
 }
@@ -66,7 +63,7 @@ input[type="submit"]{
   margin-top: 35px;
   margin-left: 120px;
   border: 1px solid white;
-  border-radius: 10px;
+  border-radius: 10px;       /* this is the Search button styling........*/
   width: 100px;
   height:50px;
   box-shadow: 5px;
@@ -93,3 +90,10 @@ input[type="submit"]{
   background-repeat: no-repeat;
   background-size: cover;
 }
+.sidenav{
+    background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
+    color: white;
+    padding: 20px;
+}
+
+ 
