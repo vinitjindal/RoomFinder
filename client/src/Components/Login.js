@@ -1,30 +1,38 @@
 import React, { Component } from 'react';
 import Modal from 'react-awesome-modal';
+import { Link } from 'react-router-dom';
 import './Login.css';
 
 
 export default class Login extends Component {
+
+    state={
+      username:"",
+      password:""
+    }
     /*constructor(props) {
           super(props);
         this.state = {
-            visible : false
+            visibleSignUp : false,
+            email:"",
+            password:"",
         }
     }
 
-    openModal() {
+    openSignUp() {
         this.setState({
-            visible : true
+            visibleSignUp : true
         });
     }
 
-    closeModal() {
+    closeSignUp() {
         this.setState({
-            visible : false
+            visibleSignUp : false
         });
-    }*/
+    }
     componentDidMount(){
       console.log(this.props.state1);
-    }
+    }*/
 
     render() {
         return (
@@ -36,7 +44,7 @@ export default class Login extends Component {
                           <i className="fa fa-key"><input type="password" placeholder=" password "/></i>
                           <input type="button" value="Sign In"/>
                         </form>
-                        <a href="#">Not Have Account Yet ? Sign Up..</a>
+                          <a href="#">Forgot Password ?</a>
                      </div>
                 </Modal>
         );

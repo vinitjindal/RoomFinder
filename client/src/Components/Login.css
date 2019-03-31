@@ -16,3 +16,6 @@
   border: 0;
   border-radius: 3px;
 }
+.login a{
+  font-style: italic;
+}
