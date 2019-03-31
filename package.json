@@ -1,0 +1,27 @@
+{
+  "name": "IP",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd client && npm start",
+    "server": "cd server && npm start",
+    "start": "concurrently --kill-others \"npm run server\" \"npm run client\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinitjindal/RoomFinder.git"
+  },
+  "keywords": [],
+  "author": "Vinit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vinitjindal/RoomFinder/issues"
+  },
+  "homepage": "https://github.com/vinitjindal/RoomFinder#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "concurrently": "^4.1.0"
+  }
+}
