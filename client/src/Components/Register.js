@@ -5,18 +5,42 @@ import './Login.css';
 
 export default class Register extends Component {
   state={
-    username:"",
-    password:""
+    Name:" ",
+    Email:" ",
+    Contact:" ",
+    permanent_Address:" ",
+    password:" "
   }
+
+    handleChange=(e)=>{
+      this.setState({
+        [e.target.id]:e.target.value,
+      });
+
+    }
+    handleSubmit=(e)=>{
+      e.preventDefault();
+      console.log(this.state);
+      fetch('http://localhost:5000/home/register',{
+       method: 'PUT',
+       body: JSON.stringify(this.state),
+       headers: {"Content-Type": "application/json"}
+     }).then(res => res.json()).then((info)=>{
+       console.log("success",JSON.stringify(info));
+     })
+    }
     render() {
         return (
-                <Modal visible={this.props.state } width="400" height="300" effect="fadeInDown" onClickAway={() =>  this.props.closeSignUp()  }>
+                <Modal visible={this.props.state } width="450" height="500" effect="fadeInDown" onClickAway={() =>  this.props.closeSignUp()  }>
                     <div className='login'>
                         <h4> Register As a Vendor.. </h4>
-                        <form>
-                          <i className="fa fa-user"><input type="text" placeholder=" username " autofocus /></i>
-                          <i className="fa fa-key"><input type="password" placeholder=" password "/></i>
-                          <input type="button" value="Sign Up"/>
+                        <form  onSubmit={ this.handleSubmit }>
+                          Name:<input type="text"  id="Name" placeholder=" name " autofocus  onChange={ this.handleChange } />
+                          Email:<input type="email"   id="Email" placeholder=" email " onChange={ this.handleChange } />
+                          Contact:<input type="number"   id="Contact" placeholder="contact" onChange={ this.handleChange } />
+                          Permanent Address:<input type="text"   id="permanent_Address" placeholder=" Address " onChange={ this.handleChange } />
+                          password:<input type="password"   id="password" placeholder=" password " onChange={ this.handleChange } />
+                          <input type="submit" value="Sign Up"/>
                         </form>
                      </div>
                 </Modal>

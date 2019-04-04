@@ -40,7 +40,7 @@ export default class Login extends Component {
                     <div className='login'>
                         <h4> Login As a Vendor.. </h4>
                         <form>
-                          <i className="fa fa-user"><input type="text" placeholder=" username " autofocus /></i>
+                          <i className="fa fa-user"><input type="email" placeholder=" email " autofocus /></i>
                           <i className="fa fa-key"><input type="password" placeholder=" password "/></i>
                           <input type="button" value="Sign In"/>
                         </form>

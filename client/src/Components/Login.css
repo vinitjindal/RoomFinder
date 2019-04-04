@@ -16,6 +16,17 @@
   border: 0;
   border-radius: 3px;
 }
+.login input[type="submit"]{
+  margin-left: 70px;
+  margin-top: 10px;
+  background: linear-gradient(45deg, #FE6B8B 80%, #FF8E53 90%);
+  height:30px;
+  box-shadow: 0 3px 5px 5px rgba(255, 105, 135,0.2);
+  padding: 0 20px;
+  color:white;
+  border: 0;
+  border-radius: 3px;
+}
 .login a{
   font-style: italic;
 }
