@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-awesome-modal';
 import './Login.css';
-
+import axios from 'axios';
 
 export default class Register extends Component {
   state={
@@ -21,14 +21,19 @@ export default class Register extends Component {
     handleSubmit=(e)=>{
       e.preventDefault();
       console.log(this.state);
-      fetch('http://localhost:5000/home/register',{
-       method: 'PUT',
+      const {Name,Email,Contact,permanent_Address,password} = this.state;
+      axios.post('http://localhost:5000/home/register',{ Name,Email })
+      .then((res)=>{
+        console.log(res.data);
+      })
+      /*fetch('http://localhost:5000/home/register',{
+       method: 'POST',
        body: JSON.stringify(this.state),
        headers: {"Content-Type": "application/json"}
-     }).then(res => res.json()).then((info)=>{
-       console.log("success",JSON.stringify(info));
-     })
-    }
+     }).then((res) => {console.log(res.json())}).then((info)=>{
+       console.log("success",JSON.stringify(info))
+     })*/
+   }
     render() {
         return (
                 <Modal visible={this.props.state } width="450" height="500" effect="fadeInDown" onClickAway={() =>  this.props.closeSignUp()  }>

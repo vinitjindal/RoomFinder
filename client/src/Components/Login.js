@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Modal from 'react-awesome-modal';
-import { Link } from 'react-router-dom';
 import './Login.css';
 
 
