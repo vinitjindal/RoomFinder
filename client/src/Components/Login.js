@@ -1,13 +1,42 @@
 import React, { Component } from 'react';
 import Modal from 'react-awesome-modal';
+import { withRouter } from 'react-router-dom';
+
 import './Login.css';
+import axios from 'axios';
 
 
-export default class Login extends Component {
+ class Login extends Component {
 
     state={
       username:"",
       password:""
+    }
+
+    handleChange=(e)=>{
+      this.setState({
+        [e.target.id]:e.target.value
+      })
+    }
+
+    handleSubmit=(e)=>{
+      e.preventDefault();
+      const {username,password}=this.state;
+      axios.post('http://localhost:5000/home/login',{ username,password })
+      .then((res)=>{
+      //  console.log(this.props);
+          if(res.status===200){
+          //  this.props.location.push('/',);
+            console.log("yes!!!!");
+            console.log(res.data);
+          }else{
+            const error = new Error(res.error);
+            throw error;
+          }
+      }).catch((err)=>{
+        console.log(err);
+        alert("Error logging in  try again");
+      })
     }
     /*constructor(props) {
           super(props);
@@ -38,10 +67,10 @@ export default class Login extends Component {
                 <Modal visible={this.props.state1 } width="400" height="300" effect="fadeInDown" onClickAway={() =>  this.props.closeLogin()  }>
                     <div className='login'>
                         <h4> Login As a Vendor.. </h4>
-                        <form>
-                          <i className="fa fa-user"><input type="email" placeholder=" email " autofocus /></i>
-                          <i className="fa fa-key"><input type="password" placeholder=" password "/></i>
-                          <input type="button" value="Sign In"/>
+                        <form onSubmit={ this.handleSubmit }>
+                          <i className="fa fa-user"><input type="email"  id="username" placeholder=" email " onChange={this.handleChange} /></i>
+                          <i className="fa fa-key"><input type="password" id="password" placeholder=" password " onChange={this.handleChange} /></i>
+                          <input type="submit" value="Sign In"/>
                         </form>
                           <a href="#">Forgot Password ?</a>
                      </div>
@@ -49,3 +78,4 @@ export default class Login extends Component {
         );
     }
 }
+export default withRouter(Login);

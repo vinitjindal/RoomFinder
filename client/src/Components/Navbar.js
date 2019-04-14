@@ -50,6 +50,7 @@ class Navbar extends Component {
                     <li> <Link to='/FindHere'><i className="fa fa-search"></i>Find</Link> </li>
                     <li onClick={ ()=> this.openLogin()  }> <Link to='/home/login'><i className="fa fa-sign-in"></i>LogIn</Link> </li>
                     <li onClick={ ()=> this.openSignUp() }> <Link to='/home/register'><i className="fa fa-user-plus"></i>SignUp</Link></li>
+                    <li> <Link to='/profile'>Profile</Link></li>
 
               </ul>
           </nav>
@@ -77,6 +78,7 @@ class Navbar extends Component {
             <li onClick={ ()=> this.openSignUp() }>
              <Link to='/home/register'><i className="fa fa-user-plus"></i>SignUp</Link>
             </li>
+            <li> <Link to='/profile'>Profile</Link></li>
 
           </ul>
       </div>

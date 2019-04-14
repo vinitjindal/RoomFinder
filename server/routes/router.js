@@ -1,7 +1,11 @@
 var registerVendor = require('../models/registerVendor');
-
+const jwt = require('jsonwebtoken');
 var express = require('express');
 var router = express.Router();
+const withAuth = require('../middleware')
+
+
+const secret = "sorryitsprivate";
 
 /* GET home page. */
 router.post('/home/register', function(req, res, next) {
@@ -21,6 +25,26 @@ router.post('/home/register', function(req, res, next) {
     // console.log(newVendor);
     // res.send(newVendor);
 
+})
+
+router.post('/home/login',(req,res,next)=>{
+  registerVendor.findOne({ email: req.body.username ,password:req.body.password  }).then((data)=>{
+        if(!data){
+          res.send("incorrect email or password");
+        }else{
+          //console.log(req.body.username,req.body.password);
+          res.send("succesfully loged In! ");
+          const payload = req.body.username;
+          const token = jwt.sign(payload,secret);
+          res.cookie('token',token,{ httpOnly:true }).sendStatus(200);
+        }
+  })
+})
+
+router.get('/profile',withAuth,(req,res,next)=>{
+  registerVendor.findOne({email:req.username}).then((data)=>{
+     res.send(data);
+  })
 })
 
 module.exports = router;
