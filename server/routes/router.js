@@ -36,14 +36,24 @@ router.post('/home/login',(req,res,next)=>{
           res.send("succesfully loged In! ");
           const payload = req.body.username;
           const token = jwt.sign(payload,secret);
+          console.log(token);
           res.cookie('token',token,{ httpOnly:true }).sendStatus(200);
         }
   })
 })
 
-router.get('/profile',withAuth,(req,res,next)=>{
-  registerVendor.findOne({email:req.username}).then((data)=>{
+router.get('/profile',(req,res,next)=>{
+  registerVendor.findOne({}).then((data)=>{
      res.send(data);
+  })
+})
+
+router.put('/editprofile',(req,res,next)=>{
+   registerVendor.findOneAndUpdate({_id:req.body.key},{ $set:{
+    name:req.body.name, email:req.body.email, contact:req.body.contact,
+    permanent_Address:req.body.address }
+  }).then((data)=>{
+      res.send("succesfully updated !")
   })
 })
 

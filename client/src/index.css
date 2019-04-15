@@ -63,7 +63,12 @@ li{
 .col2{
   padding-left: 50px;
 }
-
+.col11{
+   padding-top: 50px;
+ }
+.col22 {
+  padding-left: 50px;
+ }
 input[type="submit"]{
   margin-top: 35px;
   margin-left: 120px;

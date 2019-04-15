@@ -54,8 +54,6 @@ class FindHere extends Component{
 
   }
 
-
-
   closeSearch=()=>{
     this.setState({
         VisibleSearch : false
