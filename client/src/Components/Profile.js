@@ -42,26 +42,7 @@ class Profile extends Component{
     permanent_Address:"",
     visible:false,
     visibleUpload:false,
-    homeList:[
-      {
-        id:1,
-        address:"#26 ward no.6",
-        state:"punjab",
-        city:"ghanaur",
-        description:"single bed room with all facilities",
-        contact:6547932145,
-        price:14000,
-      },
-      {
-        id:2,
-        address:"#261 ward no.6",
-        state:"punjab1",
-        city:"ghanaur1",
-        description:"single bed room with all facilities",
-        contact:6547978145,
-        price:140000,
-      }
-    ]
+    homeList:[]
   }
 
   componentDidMount(){
@@ -73,11 +54,30 @@ class Profile extends Component{
         contact:res.data.contact,
         permanent_Address:res.data.permanent_Address,
       })
-      console.log(this.state.key);
-    })
+     })
+  }
+
+  handleClick=(e)=>{
+    //console.log(this.state.key);
+    axios.post('http://localhost:5000/pglist',{ Key:this.state.key })
     .then((res)=>{
-      axios.get('http://localhost:5000/pglist',{ Key:this.state.key }).then((res)=>{
-       })
+      res.data.forEach((item)=>{
+        const data={
+          id:item._id.toString(),
+          address:item.address,
+          state:item.state,
+          city:item.city,
+          description:item.description,
+          contact:item.contact,
+          price:item.price,
+        }
+         console.log(item.address)
+        let homeList = [...this.state.homeList,data]
+        this.setState({
+          homeList
+        })
+      })
+      //console.log(res.data)
     })
   }
 
@@ -121,19 +121,29 @@ class Profile extends Component{
       alert(res.data);
      })
   }
+
+  handleDelete=(id)=>{
+    //console.log(id)
+    axios.delete('http://localhost:5000/deletedata',{params:{id : id } })
+    .then((res)=>{
+      alert(res.data);
+      window.location.reload();
+      //  this.handleClick();
+    })
+  }
   render(){
 
     const  homeList  = this.state.homeList;
     const HomeList = homeList?(homeList.map(arr=>{
       return(
-        <div className='roomlist'key={ arr.id }>
+        <div className='roomlist' key={ arr.id }>
             <Card className={ this.props.classes.card1 }>
               <CardActionArea>
                   <CardMedia className={ this.props.classes.media } image="#" title="room pic"/>
                   <CardContent>
                       <Typography gutterBottom variant="h5" component="h2">
-                        Address : { arr.Address } { arr.city }  { arr.state },
-                        Contact : { arr.Mobno }
+                        Address : { arr.address } { arr.city }  { arr.state },
+                        Contact : { arr.contact }
                       </Typography>
                       <Typography component="p">
                            { arr.description }
@@ -141,17 +151,19 @@ class Profile extends Component{
                   </CardContent>
                   <CardActions>
                       <Button size="small" color="primary"> Book </Button>
+                      <Button size="small" color="primary" onClick={ ()=>this.handleDelete(arr.id) } > Delete </Button>
                   </CardActions>
                </CardActionArea>
             </Card>
           </div>
       )
-    })):(<p> Loading </p>)
+    })):(<p> Loading... </p>)
 
     return(
-      <div className=' container-fluid'>
+      <div className='container-fluid'>
         <Button className={this.props.classes.root} >Logout</Button>
         <Button  className={this.props.classes.root}  onClick={  ()=>{ this.openUpload() } } >Upload</Button>
+        <Button  className={this.props.classes.root} onClick={ ()=>this.handleClick()} >Pglist</Button>
         <div className="row">
           <div className='col11 col-sm-3'>
 

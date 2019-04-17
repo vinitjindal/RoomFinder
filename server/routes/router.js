@@ -48,14 +48,13 @@ router.get('/profile',(req,res,next)=>{
   registerVendor.findOne({}).then((data)=>{
      res.send(data);
   })
+
 })
 
-router.get('/pglist',(req,res,next)=>{
-  // vendor.findOne({key:req.body.key}).then((data)=>{
-  //   console.log(req.body.key);
-  //   res.send("yeh it worked");
-  // })
-  console.log(req.body.Key,"yeh it worked");
+router.post('/pglist',(req,res,next)=>{
+  vendor.find( {key:req.body.Key} ).then((data)=>{
+     res.send(data);
+  })
 })
 
 router.put('/editprofile',(req,res,next)=>{
@@ -76,6 +75,13 @@ router.post('/uploadPgData',(req,res,next)=>{
       console.log(err);
     }
   })
+})
+
+router.delete('/deletedata',(req,res)=>{
+  console.log(req.query.id);
+  vendor.deleteOne({_id:req.query.id}).then((data)=>{
+    res.send("succesfully deleted");
+   })
 })
 
 module.exports = router;
