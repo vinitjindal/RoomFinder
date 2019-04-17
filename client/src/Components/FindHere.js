@@ -101,8 +101,8 @@ class FindHere extends Component{
       )
     })):(<p> Loading </p>)
     return(
-      <div className=' row container-fluid'>
-        <div className=' col1 col-sm-3'>
+      <div className='row container-fluid'>
+        <div className='col1 col-sm-3'>
           <Button className={this.props.classes.root} onClick={ ()=>this.handleClick() } >Search here..</Button>
           <Search closeSearch={ this.closeSearch } state={ this.state.VisibleSearch } addInfo={ this.searchPg }/>
         </div>

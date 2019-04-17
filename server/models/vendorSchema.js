@@ -3,27 +3,39 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const VendorSchema = new Schema({
-  pgList:[
-    {
-      Address:{
+      key:{ type:String },
+
+      address:{
         type:String,
          required:[true,'can not be empty'],
+      },
+      state:{
+        type:String,
+        required:[true,'can not be empty'],
+
+      },
+      city:{
+        type:String,
+        required:[true,'can not be empty'],
+
       },
       description:{
         type:String,
         required:[true,'can not be empty'],
       },
+      contact:{
+        type:Number,
+        required:[true,'can not be empty'],
+
+      },
       price:{
-        type:String,
+        type:Number,
         required:[true,'can not be empty']
       },
-      image:{
-        data : Buffer
-      }
-    }
-  ]
+
+
 });
 
-const Vendor = mongoose.model('vendor',VendorSchema);
+const vendor = mongoose.model('vendors',VendorSchema);
 
-module.exports = Vendor;
+module.exports = vendor;

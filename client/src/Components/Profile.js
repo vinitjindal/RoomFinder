@@ -1,12 +1,24 @@
 import React,{ Component } from 'react';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import Modal from 'react-awesome-modal';
-
+import UploadPgData from './uploadPgData'
 import { withStyles } from '@material-ui/core/styles';
 
 import axios from 'axios';
 
 const styles = {
+  card1: {
+    maxWidth: 545,
+  },
+  media: {
+    height: 240,
+  },
   root: {
   background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
   border: 0,
@@ -16,7 +28,8 @@ const styles = {
   height: 30,
   padding: '0 40px',
   width:50,
-  marginTop:10
+  marginTop:10,
+  marginLeft:50
   },
 }
 
@@ -27,7 +40,28 @@ class Profile extends Component{
     email:"",
     contact:"",
     permanent_Address:"",
-    visible:false
+    visible:false,
+    visibleUpload:false,
+    homeList:[
+      {
+        id:1,
+        address:"#26 ward no.6",
+        state:"punjab",
+        city:"ghanaur",
+        description:"single bed room with all facilities",
+        contact:6547932145,
+        price:14000,
+      },
+      {
+        id:2,
+        address:"#261 ward no.6",
+        state:"punjab1",
+        city:"ghanaur1",
+        description:"single bed room with all facilities",
+        contact:6547978145,
+        price:140000,
+      }
+    ]
   }
 
   componentDidMount(){
@@ -39,8 +73,27 @@ class Profile extends Component{
         contact:res.data.contact,
         permanent_Address:res.data.permanent_Address,
       })
+      console.log(this.state.key);
+    })
+    .then((res)=>{
+      axios.get('http://localhost:5000/pglist',{ Key:this.state.key }).then((res)=>{
+       })
     })
   }
+
+  openUpload=(e)=>{
+    this.setState({
+      visibleUpload:true
+    })
+   }
+
+  closeUpload=(e)=>{
+    this.setState({
+      visibleUpload:false
+
+    })
+  }
+
   openUpdate=(e)=>{
     this.setState({
       visible:true,
@@ -69,11 +122,38 @@ class Profile extends Component{
      })
   }
   render(){
+
+    const  homeList  = this.state.homeList;
+    const HomeList = homeList?(homeList.map(arr=>{
+      return(
+        <div className='roomlist'key={ arr.id }>
+            <Card className={ this.props.classes.card1 }>
+              <CardActionArea>
+                  <CardMedia className={ this.props.classes.media } image="#" title="room pic"/>
+                  <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        Address : { arr.Address } { arr.city }  { arr.state },
+                        Contact : { arr.Mobno }
+                      </Typography>
+                      <Typography component="p">
+                           { arr.description }
+                      </Typography>
+                  </CardContent>
+                  <CardActions>
+                      <Button size="small" color="primary"> Book </Button>
+                  </CardActions>
+               </CardActionArea>
+            </Card>
+          </div>
+      )
+    })):(<p> Loading </p>)
+
     return(
       <div className=' container-fluid'>
         <Button className={this.props.classes.root} >Logout</Button>
+        <Button  className={this.props.classes.root}  onClick={  ()=>{ this.openUpload() } } >Upload</Button>
         <div className="row">
-          <div className=' card col11 col-sm-3'>
+          <div className='col11 col-sm-3'>
 
               <p>Name:  { this.state.name }</p>
               <p>Email:  { this.state.email }</p>
@@ -94,8 +174,9 @@ class Profile extends Component{
                   </Modal>
               </section>
           </div>
-          <div className=' card col22 col-sm-9'>
-            <p>You have nothing aploaded yet!</p>
+          <div className='col22 col-sm-9'>
+            <UploadPgData   Key={ this.state.key } state={ this.state.visibleUpload }  closeUpload={ this.closeUpload } />
+            { HomeList }
           </div>
        </div>
      </div>

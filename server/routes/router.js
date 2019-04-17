@@ -1,4 +1,6 @@
 var registerVendor = require('../models/registerVendor');
+var vendor = require('../models/vendorSchema');
+
 const jwt = require('jsonwebtoken');
 var express = require('express');
 var router = express.Router();
@@ -48,12 +50,31 @@ router.get('/profile',(req,res,next)=>{
   })
 })
 
+router.get('/pglist',(req,res,next)=>{
+  // vendor.findOne({key:req.body.key}).then((data)=>{
+  //   console.log(req.body.key);
+  //   res.send("yeh it worked");
+  // })
+  console.log(req.body.Key,"yeh it worked");
+})
+
 router.put('/editprofile',(req,res,next)=>{
    registerVendor.findOneAndUpdate({_id:req.body.key},{ $set:{
     name:req.body.name, email:req.body.email, contact:req.body.contact,
     permanent_Address:req.body.address }
   }).then((data)=>{
       res.send("succesfully updated !")
+  })
+})
+
+router.post('/uploadPgData',(req,res,next)=>{
+  vendor.create(req.body).then((data) => {
+    console.log(data);
+    res.send("succesfully registered !");
+  }).catch((err)=>{
+    if (err){
+      console.log(err);
+    }
   })
 })
 

@@ -48,7 +48,7 @@ export default class Register extends Component {
                     <div className='login'>
                         <h4> Register As a Vendor.. </h4>
                         <form  onSubmit={ this.handleSubmit }>
-                          Name:<input type="text"  id="name" value={this.state.name}  autofocus  onChange={ this.handleChange } />
+                          Name:<input type="text"  id="name" value={this.state.name}   onChange={ this.handleChange } />
                           Email:<input type="email"   id="email" value={this.state.email}  onChange={ this.handleChange } />
                           Contact:<input type="text"   id="contact" value={this.state.contact} onChange={ this.handleChange } />
                           Permanent Address:<input type="text"   id="permanent_Address" value={this.state.permanent_Address} onChange={ this.handleChange } />

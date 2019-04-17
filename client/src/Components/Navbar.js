@@ -42,7 +42,7 @@ class Navbar extends Component {
       <div>
           <nav className=" nav-wrapper #01579b light-blue darken-2">
                 <Link to='/' className='brand-logo'><i className="fa fa-fw fa-home"></i>Newbies Residence</Link>
-                <a href="#" data-target="mobile-nav" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+                <a href="/#" data-target="mobile-nav" className="sidenav-trigger"><i className="material-icons">menu</i></a>
                 <ul className="right hide-on-med-and-down">
 
                     <li> <Link to='/About'><i className="fa fa-globe"></i>AboutUs</Link> </li>

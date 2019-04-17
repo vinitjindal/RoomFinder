@@ -72,7 +72,7 @@ import axios from 'axios';
                           <i className="fa fa-key"><input type="password" id="password" placeholder=" password " onChange={this.handleChange} /></i>
                           <input type="submit" value="Sign In"/>
                         </form>
-                          <a href="#">Forgot Password ?</a>
+                          <a href="/#">Forgot Password ?</a>
                      </div>
                 </Modal>
         );
