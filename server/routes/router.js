@@ -16,7 +16,7 @@ router.post('/home/register', function(req, res, next) {
     })*/
     // var newVendor = new Vendor(req.body);
     registerVendor.create(req.body).then((data) => {
-      console.log(data);
+      //console.log(data);
       res.send("succesfully registered !");
     }).catch((err)=>{
       if (err){
@@ -35,19 +35,21 @@ router.post('/home/login',(req,res,next)=>{
           res.send("incorrect email or password");
         }else{
           //console.log(req.body.username,req.body.password);
-          res.send("succesfully loged In! ");
-          const payload = req.body.username;
+          res.send("succesfully loged In!");
+          //console.log(data.email);
+          const payload = data.email;
+          //console.log(payload);
           const token = jwt.sign(payload,secret);
-          console.log(token);
           res.cookie('token',token,{ httpOnly:true }).sendStatus(200);
         }
   })
 })
 
-router.get('/profile',(req,res,next)=>{
-  registerVendor.findOne({}).then((data)=>{
+router.get('/profile',withAuth,(req,res,next)=>{
+  console.log(req.body.username);
+  /*registerVendor.findOne({email:req.body.username}).then((data)=>{
      res.send(data);
-  })
+  })*/
 
 })
 
@@ -68,7 +70,7 @@ router.put('/editprofile',(req,res,next)=>{
 
 router.post('/uploadPgData',(req,res,next)=>{
   vendor.create(req.body).then((data) => {
-    console.log(data);
+    //console.log(data);
     res.send("succesfully registered !");
   }).catch((err)=>{
     if (err){
@@ -78,7 +80,7 @@ router.post('/uploadPgData',(req,res,next)=>{
 })
 
 router.delete('/deletedata',(req,res)=>{
-  console.log(req.query.id);
+//  console.log(req.query.id);
   vendor.deleteOne({_id:req.query.id}).then((data)=>{
     res.send("succesfully deleted");
    })

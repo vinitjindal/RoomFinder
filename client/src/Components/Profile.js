@@ -166,7 +166,7 @@ class Profile extends Component{
         <Button  className={this.props.classes.root} onClick={ ()=>this.handleClick()} >Pglist</Button>
         <div className="row">
           <div className='col11 col-sm-3'>
-
+            <div className='card'>
               <p>Name:  { this.state.name }</p>
               <p>Email:  { this.state.email }</p>
               <p>Contact:  { this.state.contact }</p>
@@ -185,6 +185,7 @@ class Profile extends Component{
                       </div>
                   </Modal>
               </section>
+            </div>
           </div>
           <div className='col22 col-sm-9'>
             <UploadPgData   Key={ this.state.key } state={ this.state.visibleUpload }  closeUpload={ this.closeUpload } />
