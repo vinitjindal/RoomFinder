@@ -4,25 +4,44 @@ var vendor = require('../models/vendorSchema');
 const jwt = require('jsonwebtoken');
 var express = require('express');
 var router = express.Router();
-const withAuth = require('../middleware')
+const withAuth = require('./middleware')
 
 
 const secret = "sorryitsprivate";
 
+
+
 /* GET home page. */
 router.post('/home/register', function(req, res, next) {
+
+  const { name,email,contact,permanent_Address,password } = req.body;
+
+    const newUser = new registerVendor({ name,email,contact,permanent_Address,password  });
+
+    newUser.save().then(user=>{
+      jwt.sign(
+        { id:user.id },
+        secret,{ expiresIn:3600 },(err,token)=>{
+          if (err) throw err;
+          res.send("succesfully registered");
+          console.log(token);
+        }
+      )
+      console.log(user.id);
+    });
+
     /*Vendor.create(req.body,(err,res)=>{
       res.send("succesfully connected")
     })*/
     // var newVendor = new Vendor(req.body);
-    registerVendor.create(req.body).then((data) => {
+    /*registerVendor.create(req.body).then((data) => {
       //console.log(data);
       res.send("succesfully registered !");
     }).catch((err)=>{
       if (err){
         console.log(err);
       }
-    })
+    })*/
     // newVendor.save().then(res.send("success in submit data"));
     // console.log(newVendor);
     // res.send(newVendor);
@@ -30,26 +49,35 @@ router.post('/home/register', function(req, res, next) {
 })
 
 router.post('/home/login',(req,res,next)=>{
-  registerVendor.findOne({ email: req.body.username ,password:req.body.password  }).then((data)=>{
-        if(!data){
-          res.send("incorrect email or password");
-        }else{
+  registerVendor.findOne({ email: req.body.username ,password:req.body.password}).then((data)=>{
+        if(!data) res.send("incorrect email or password");
           //console.log(req.body.username,req.body.password);
-          res.send("succesfully loged In!");
+          // res.send("succesfully loged In!");
           //console.log(data.email);
-          const payload = data.email;
-          //console.log(payload);
-          const token = jwt.sign(payload,secret);
-          res.cookie('token',token,{ httpOnly:true }).sendStatus(200);
-        }
+          const payload = data.id;
+          // console.log(payload);
+          //res.json(payload);
+           jwt.sign({ id:data.id },secret,{ expiresIn:3600 },(err,token)=>{
+             if (err) throw err;
+            // res.cookie("token",token);
+             res.send(token);
+             //res.sendStatus(200).send(token);
+             //res.setHeader(200,{'content-type':'application/json'});
+             // res.end(JSON.stringify(value));
+             //res.json(token);
+             //res.status(200),setHeader(token).send("hurrey !");
+           });
   })
 })
 
-router.get('/profile',withAuth,(req,res,next)=>{
-  console.log(req.body.username);
-  /*registerVendor.findOne({email:req.body.username}).then((data)=>{
-     res.send(data);
-  })*/
+router.post('/profile',withAuth,(req,res,next)=>{
+  //console.log(req);
+  // res.send(req.cookies);
+  // console.log(req.cookies.secret);
+  //res.json(req.user.id);
+  registerVendor.findOne({_id:req.user.id}).then((data)=>{
+     res.json(data);
+  })
 
 })
 

@@ -27,11 +27,11 @@ export default class Register extends Component {
          alert(res.data);
       }).then((data)=>{
         this.setState({
-          name:" ",
-          email:" ",
-          contact:" ",
-          permanent_Address:" ",
-          password:" "
+          name:"",
+          email:"",
+          contact:"",
+          permanent_Address:"",
+          password:""
         })
       })
       /*fetch('http://localhost:5000/home/register',{
@@ -53,7 +53,7 @@ export default class Register extends Component {
                           Contact:<input type="text"   id="contact" value={this.state.contact} onChange={ this.handleChange } />
                           Permanent Address:<input type="text"   id="permanent_Address" value={this.state.permanent_Address} onChange={ this.handleChange } />
                           password:<input type="password"  id="password"  value={ this.state.password } onChange={ this.handleChange } />
-                          <input type="submit" value="Sign Up"/>
+                          <input type="submit" value="Sign Up" onClick={ () =>  this.props.closeSignUp() }/>
                         </form>
                      </div>
                 </Modal>

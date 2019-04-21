@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import Modal from 'react-awesome-modal';
 import UploadPgData from './uploadPgData'
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'recompose'
 
 import axios from 'axios';
 
@@ -46,20 +48,31 @@ class Profile extends Component{
   }
 
   componentDidMount(){
-    axios.get('http://localhost:5000/profile').then((res)=>{
-       this.setState({
-        key:res.data._id.toString(),
-        name: res.data.name ,
-        email:res.data.email,
-        contact:res.data.contact,
-        permanent_Address:res.data.permanent_Address,
+    //  console.log(this.props.token);
+    if(this.props.token!==""){
+      axios.post('http://localhost:5000/profile',{ token:this.props.token }).then((res)=>{
+        this.setState({
+          key:res.data._id.toString(),
+          name: res.data.name ,
+          email:res.data.email,
+          contact:res.data.contact,
+          permanent_Address:res.data.permanent_Address,
+        })
+        //console.log(res.data);
       })
-     })
+  }else{
+    alert("please login to access profile");
+  }
+}
+
+  handleLogout(){
+    this.props.lougoutToken();
+    this.props.history.push('/');
   }
 
   handleClick=(e)=>{
     //console.log(this.state.key);
-    axios.post('http://localhost:5000/pglist',{ Key:this.state.key })
+    axios.get('http://localhost:5000/pglist',{ Key:this.state.key })
     .then((res)=>{
       res.data.forEach((item)=>{
         const data={
@@ -161,7 +174,7 @@ class Profile extends Component{
 
     return(
       <div className='container-fluid'>
-        <Button className={this.props.classes.root} >Logout</Button>
+        <Button className={this.props.classes.root} onClick={ ()=>this.handleLogout() }>Logout</Button>
         <Button  className={this.props.classes.root}  onClick={  ()=>{ this.openUpload() } } >Upload</Button>
         <Button  className={this.props.classes.root} onClick={ ()=>this.handleClick()} >Pglist</Button>
         <div className="row">
@@ -199,3 +212,7 @@ class Profile extends Component{
 }
 
 export default withStyles(styles)(Profile);
+// export default compose(
+//   withStyles,
+//   withRouter,
+// )(Profile);

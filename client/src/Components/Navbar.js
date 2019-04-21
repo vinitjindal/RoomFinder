@@ -9,9 +9,18 @@ class Navbar extends Component {
       state = {
            VisibleLogin : false,
            visibleSignUp : false,
+           token:""
 
       }
 
+
+ addtoken=(token)=>{
+   this.setState({
+     token
+   })
+   //console.log(this.state.token);
+   this.props.changetoken(this.state.token);
+ }
 
 
  openLogin=()=>{
@@ -54,7 +63,7 @@ class Navbar extends Component {
 
               </ul>
           </nav>
-          <Login closeLogin = { this.closeLogin } state1 = { this.state.VisibleLogin }/>
+          <Login   addtoken={ this.addtoken } closeLogin = { this.closeLogin } state1 = { this.state.VisibleLogin }  />
           <Register closeSignUp = { this.closeSignUp } state = { this.state.VisibleSignUp }/>
 
           <ul className="sidenav" id="mobile-nav">

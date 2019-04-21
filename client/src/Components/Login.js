@@ -10,8 +10,10 @@ import axios from 'axios';
 
     state={
       username:"",
-      password:""
-    }
+      password:"",
+    };
+
+
 
     handleChange=(e)=>{
       this.setState({
@@ -21,46 +23,23 @@ import axios from 'axios';
 
     handleSubmit=(e)=>{
       e.preventDefault();
-      const {username,password}=this.state;
-      axios.post('http://localhost:5000/home/login',{ username,password })
+       /*fetch('http://localhost:5000/home/login',{
+        method:'POST',
+        headers:{
+          'Content-type':'application/json',
+        },
+        body:JSON.stringify(this.state),
+      }).then((res)=>{
+          console.log(res.data);
+
+      })*/
+       axios.post("http://localhost:5000/home/login",{username:this.state.username,password:this.state.password})
       .then((res)=>{
-      //  console.log(this.props);
-          if(res.status===200){
-          //  this.props.location.push('/',);
-            console.log("yes!!!!");
-            console.log(res.data);
-          }else{
-            const error = new Error(res.error);
-            throw error;
-          }
-      }).catch((err)=>{
-        console.log(err);
-        alert("Error logging in  try again");
+        this.props.addtoken(res.data);
+         //console.log(res.data);
+         this.props.history.push('/');
       })
     }
-    /*constructor(props) {
-          super(props);
-        this.state = {
-            visibleSignUp : false,
-            email:"",
-            password:"",
-        }
-    }
-
-    openSignUp() {
-        this.setState({
-            visibleSignUp : true
-        });
-    }
-
-    closeSignUp() {
-        this.setState({
-            visibleSignUp : false
-        });
-    }
-    componentDidMount(){
-      console.log(this.props.state1);
-    }*/
 
     render() {
         return (
@@ -70,7 +49,7 @@ import axios from 'axios';
                         <form onSubmit={ this.handleSubmit }>
                           <i className="fa fa-user"><input type="email"  id="username" placeholder=" email " onChange={this.handleChange} /></i>
                           <i className="fa fa-key"><input type="password" id="password" placeholder=" password " onChange={this.handleChange} /></i>
-                          <input type="submit" value="Sign In"/>
+                          <input type="submit" value="Sign In" onClickAway={() =>  this.props.closeLogin() } />
                         </form>
                           <a href="/#">Forgot Password ?</a>
                      </div>
@@ -78,4 +57,5 @@ import axios from 'axios';
         );
     }
 }
+
 export default withRouter(Login);
