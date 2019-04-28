@@ -25,17 +25,15 @@ import axios from 'axios';
       e.preventDefault();
        axios.post("http://localhost:5000/home/login",{ username:this.state.username, password:this.state.passcord })
       .then((res)=>{
-          alert(res.data);
-          if(res.status===200){
+            if(res.status===200){
             this.props.addtoken(res.data);
-            console.log(res.data);
-            this.props.history.push('/FindHere');
+             this.props.history.push('/FindHere');
             this.setState({
               username:"",
               passcord:""
             });
           }else{
-            alert(res.data);
+             alert(res.data);
           }
       })
     }

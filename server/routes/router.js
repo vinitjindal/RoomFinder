@@ -35,10 +35,10 @@ router.post('/home/register', function(req, res, next) {
 })
 
 router.post('/home/login',(req,res,next)=>{
-  console.log(req.body);
+  //console.log(req.body);
   registerVendor.findOne({ email: req.body.username ,password:req.body.password}).then((data)=>{
          if(!data){
-           res.status(400);
+           res.status(401);
            res.send("incorrect email or password");
         }else{
           jwt.sign({ id:data.id },secret,{ expiresIn:3600 },(err,token)=>{
