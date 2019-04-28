@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from './Components/Navbar';
-import { Route,Switch,BrowserRouter,Redirect } from 'react-router-dom';
+import { Route,Switch,BrowserRouter} from 'react-router-dom';
 import Home from './Components/Home';
 import FindHere from './Components/FindHere';
 import Profile from './Components/Profile';

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Modal from 'react-awesome-modal';
 import './Login.css';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
-export default class Register extends Component {
+ class Register extends Component {
   state={
     name:"",
     email:"",
@@ -25,6 +26,8 @@ export default class Register extends Component {
       axios.post('http://localhost:5000/home/register',{ name,email,contact,permanent_Address,password })
       .then((res)=>{
          alert(res.data);
+        // this.props.history.push('/FindHere');
+
       }).then((data)=>{
         this.setState({
           name:"",
@@ -48,15 +51,17 @@ export default class Register extends Component {
                     <div className='login'>
                         <h4> Register As a Vendor.. </h4>
                         <form  onSubmit={ this.handleSubmit }>
-                          Name:<input type="text"  id="name" value={this.state.name}   onChange={ this.handleChange } />
-                          Email:<input type="email"   id="email" value={this.state.email}  onChange={ this.handleChange } />
-                          Contact:<input type="text"   id="contact" value={this.state.contact} onChange={ this.handleChange } />
-                          Permanent Address:<input type="text"   id="permanent_Address" value={this.state.permanent_Address} onChange={ this.handleChange } />
-                          password:<input type="password"  id="password"  value={ this.state.password } onChange={ this.handleChange } />
-                          <input type="submit" value="Sign Up" onClick={ () =>  this.props.closeSignUp() }/>
+                          Name:<input type="text"  id="name" value={this.state.name}   onChange={ this.handleChange } required/>
+                          Email:<input type="email"   id="email" value={this.state.email}  onChange={ this.handleChange } required/>
+                          Contact:<input type="number"   id="contact" value={this.state.contact} onChange={ this.handleChange } required/>
+                          Permanent Address:<input type="text"   id="permanent_Address" value={this.state.permanent_Address} onChange={ this.handleChange } required/>
+                          password:<input type="password"  id="password"  value={ this.state.password } onChange={ this.handleChange } required/>
+                          <input type="submit" value="Sign Up"/>
                         </form>
                      </div>
                 </Modal>
         );
     }
 }
+
+export default withRouter(Register);

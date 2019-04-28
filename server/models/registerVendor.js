@@ -20,7 +20,7 @@ const registerSchema = new Schema({
      // required:[true,'can not be empty']
   },
   password:{
-    type:Number,
+    type:String,
     // required:[true,'can not be empty']
   }
 })

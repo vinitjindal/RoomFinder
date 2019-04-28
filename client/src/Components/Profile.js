@@ -9,8 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import Modal from 'react-awesome-modal';
 import UploadPgData from './uploadPgData'
 import { withStyles } from '@material-ui/core/styles';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'recompose'
 
 import axios from 'axios';
 
@@ -38,10 +36,10 @@ const styles = {
 class Profile extends Component{
   state={
     key:"",
-    name:"",
-    email:"",
-    contact:"",
-    permanent_Address:"",
+    name_1:"",
+    email_1:"",
+    contact_1:"",
+    permanent_Address_1:"",
     visible:false,
     visibleUpload:false,
     homeList:[]
@@ -53,10 +51,10 @@ class Profile extends Component{
       axios.post('http://localhost:5000/profile',{ token:this.props.token }).then((res)=>{
         this.setState({
           key:res.data._id.toString(),
-          name: res.data.name ,
-          email:res.data.email,
-          contact:res.data.contact,
-          permanent_Address:res.data.permanent_Address,
+          name_1: res.data.name ,
+          email_1:res.data.email,
+          contact_1:res.data.contact,
+          permanent_Address_1:res.data.permanent_Address,
         })
         //console.log(res.data);
       })
@@ -67,12 +65,12 @@ class Profile extends Component{
 
   handleLogout(){
     this.props.lougoutToken();
-    this.props.history.push('/');
+    //this.props.history.push('/');
   }
 
   handleClick=(e)=>{
     //console.log(this.state.key);
-    axios.get('http://localhost:5000/pglist',{ Key:this.state.key })
+    axios.post('http://localhost:5000/pglist',{ Key:this.state.key })
     .then((res)=>{
       res.data.forEach((item)=>{
         const data={
@@ -90,7 +88,7 @@ class Profile extends Component{
           homeList
         })
       })
-      //console.log(res.data)
+      console.log(res.data)
     })
   }
 
@@ -125,10 +123,10 @@ class Profile extends Component{
   }
 
   handleSubmit=(e)=>{
-    //e.preventDefault();
+   e.preventDefault();
     axios.put("http://localhost:5000/editprofile",{
-      name:this.state.name,email:this.state.email, contact:this.state.contact,
-      address:this.state.permanent_Address,key:this.state.key
+      name:this.state.name_1,email:this.state.email_1, contact:this.state.contact_1,
+      address:this.state.permanent_Address_1,key:this.state.key
     })
     .then((res)=>{
       alert(res.data);
@@ -180,19 +178,19 @@ class Profile extends Component{
         <div className="row">
           <div className='col11 col-sm-3'>
             <div className='card'>
-              <p>Name:  { this.state.name }</p>
-              <p>Email:  { this.state.email }</p>
-              <p>Contact:  { this.state.contact }</p>
-              <p>Address:  { this.state.permanent_Address }</p>
+              <p>Name:  { this.state.name_1 }</p>
+              <p>Email:  { this.state.email_1 }</p>
+              <p>Contact:  { this.state.contact_1 }</p>
+              <p>Address:  { this.state.permanent_Address_1 }</p>
               <section>
               <Button className={this.props.classes.root} onClick={ ()=>this.openUpdate() } >Update</Button>
                   <Modal visible={this.state.visible} width="400" height="300" effect="fadeInUp" onClickAway={() =>  this.closeUpdate()  }>
                        <div>
                           <form onSubmit={ this.handleSubmit } >
-                            Name: <input type="text" id='name' value={this.state.name} onChange={ this.handleChange }/>
-                            Email: <input type="text" id='email' value={this.state.email} onChange={ this.handleChange }/>
-                            Contact: <input type="text" id='contact' value={this.state.contact} onChange={ this.handleChange }/>
-                            Address: <input type="text" id='permanent_Address' value={this.state.permanent_Address} onChange={ this.handleChange }/>
+                            Name: <input type="text" id='name_1' value={this.state.name_1} onChange={ this.handleChange }/>
+                            Email: <input type="text" id='email_1' value={this.state.email_1} onChange={ this.handleChange }/>
+                            Contact: <input type="text" id='contact_1' value={this.state.contact_1} onChange={ this.handleChange }/>
+                            Address: <input type="text" id='permanent_Address_1' value={this.state.permanent_Address_1} onChange={ this.handleChange }/>
                             <input type="submit" value="update" onClick={ ()=>this.closeUpdate() }/>
                           </form>
                       </div>
@@ -213,6 +211,5 @@ class Profile extends Component{
 
 export default withStyles(styles)(Profile);
 // export default compose(
-//   withStyles,
 //   withRouter,
 // )(Profile);
