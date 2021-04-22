@@ -11,40 +11,21 @@ import Profile from './Components/Profile';
 
 
 class App extends Component {
-
-  state={
-    token:"",
-  }
-
-  changetoken=(token)=>{
-    this.setState({
-      token
-    })
-  alert("logIn succesfully!");
-
-  }
-  lougoutToken=(e)=>{
-    this.setState({
-      token:"",
-    })
-    alert("logout succesfully!");
-   }
+ 
   render() {
     return (
-         <BrowserRouter>
-          <div className="App">
-              <Navbar changetoken={ this.changetoken } />
+        <BrowserRouter>
+          <div className="App" style = {{backgroundColor:"#"}}>
+              <Navbar /> 
               <Switch>
-
                 <Route exact path='/' component={ Home }/>
                 <Route path='/findhere' component={ FindHere }/>
                 <Route path='/home/login' component={ Home }/>
                 <Route path='/home/register' component={ Home }/>
-                <Route path='/profile' component={() => <Profile token={ this.state.token } lougoutToken={ this.lougoutToken } />} />
-
-               </Switch>
+                <Route path='/profile' component={ Profile } />
+              </Switch> 
           </div>
-        </BrowserRouter>
+      </BrowserRouter>
      );
   }
 }

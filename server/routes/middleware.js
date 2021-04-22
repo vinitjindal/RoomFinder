@@ -16,7 +16,7 @@ const withAuth = function(req,res,next){
       req.user = decoded;
       next();
     }catch(e){
-      res.status(400).send("token is not valid");
+      res.status(401).send("token is not valid");
     }
   }
 

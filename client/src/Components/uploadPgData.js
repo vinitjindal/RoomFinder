@@ -3,19 +3,24 @@ import React,{ Component } from 'react';
 import Modal from 'react-awesome-modal';
 import axios from 'axios';
 //import { withStyles } from '@material-ui/core/styles';
-
+import "./Login.css";
 
 class UploadPgData extends Component{
-  state={
+ constructor(props)
+ {
+    super(props);
+    this.state = {
 
-        address:"",
-        state:"",
-        city:"",
-        description:"",
-        pg_contact:undefined,
-        price:undefined,
+      address:"",
+      state:"",
+      city:"",
+      description:"",
+      pg_contact:"",
+      price:"",
 
-  }
+    };
+ }
+  
 
  handleChange=(e)=>{
    this.setState({
@@ -35,9 +40,10 @@ class UploadPgData extends Component{
          state:"",
          city:"",
          description:"",
-         contact:undefined,
-         price:undefined,
+         pg_contact:"",
+         price:"",
        })
+       this.props.checkData();
      })
  }
 
@@ -45,16 +51,18 @@ class UploadPgData extends Component{
     return(
       <div>
         <section>
-             <Modal visible={this.props.state} width="400" height="450" effect="fadeInUp" onClickAway={() =>  this.props.closeUpload()  }>
-                 <div>
-                    <form onSubmit={ this.handleSubmit } >
-                      Address: <input type="text" id='address' value={this.state.address} onChange={ this.handleChange }/>
-                      State: <input type="text" id='state' value={this.state.state} onChange={ this.handleChange }/>
-                      city: <input type="text" id='city' value={this.state.city} onChange={ this.handleChange }/>
-                      description: <input type="text" id='description' value={this.state.description} onChange={ this.handleChange }/>
-                      Contact: <input type="number" id='pg_contact' value={this.state.pg_contact} onChange={ this.handleChange }/>
-                      Price: <input type="number" id='price' value={this.state.price} onChange={ this.handleChange }/>
-                      <input type="submit" value="submit"/>
+             <Modal visible={this.props.state} width="400" height="570" effect="fadeInUp" onClickAway={() =>  this.props.closeUpload()  }>
+                 <div className = "login">
+                    <form  onSubmit={ this.handleSubmit } >
+                      <div id = "uploadPgData" >
+                          Address: <input type="text" id='address' value={this.state.address} onChange={ this.handleChange }/>
+                          State: <input type="text" id='state' value={this.state.state} onChange={ this.handleChange }/>
+                          city: <input type="text" id='city' value={this.state.city} onChange={ this.handleChange }/>
+                          description: <input type="text" id='description' value={this.state.description} onChange={ this.handleChange }/>
+                          Contact: <input type="number" id='pg_contact' value={this.state.pg_contact} onChange={ this.handleChange }/>
+                          Price: <input type="number" id='price' value={this.state.price} onChange={ this.handleChange }/>
+                      </div>
+                      <input type="submit" value="submit" onClick = {() =>  this.props.closeUpload()}/>
                     </form>
                 </div>
             </Modal>

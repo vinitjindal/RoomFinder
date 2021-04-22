@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import Modal from 'react-awesome-modal';
 import UploadPgData from './uploadPgData'
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import "./Login.css"
 
 import axios from 'axios';
 
@@ -42,53 +44,60 @@ class Profile extends Component{
     permanent_Address_1:"",
     visible:false,
     visibleUpload:false,
-    homeList:[]
+    homeList:[],
+    isDataUploaded : false
   }
 
   componentDidMount(){
-    //  console.log(this.props.token);
-    if(this.props.token!==""){
-      axios.post('http://localhost:5000/profile',{ token:this.props.token }).then((res)=>{
-        this.setState({
-          key:res.data._id.toString(),
-          name_1: res.data.name ,
-          email_1:res.data.email,
-          contact_1:res.data.contact,
-          permanent_Address_1:res.data.permanent_Address,
-        })
-        //console.log(res.data);
+    const token = JSON.parse(localStorage.getItem('token'));
+    if(token !== null){
+      axios.post('http://localhost:5000/profile',{ token : token }).then((res)=>{
+      this.setState({
+        key:res.data._id.toString(),
+        name_1: res.data.name ,
+        email_1:res.data.email,
+        contact_1:res.data.contact,
+        permanent_Address_1:res.data.permanent_Address,
       })
-  }else{
-    alert("please login to access profile");
+    }).catch((err)=>{
+      this.props.setAuthToken(null);
+      this.props.history.push('/');
+      alert('time expires login again !');
+    })
   }
+
+
+  
 }
 
   handleLogout(){
-    this.props.lougoutToken();
-    //this.props.history.push('/');
+    this.props.setAuthToken(null);
+    this.props.history.push('/');
   }
 
   handleClick=(e)=>{
     //console.log(this.state.key);
     axios.post('http://localhost:5000/pglist',{ Key:this.state.key })
     .then((res)=>{
-      res.data.forEach((item)=>{
-        const data={
-          id:item._id.toString(),
-          address:item.address,
-          state:item.state,
-          city:item.city,
-          description:item.description,
-          contact:item.contact,
-          price:item.price,
-        }
-         console.log(item.address)
-        let homeList = [...this.state.homeList,data]
-        this.setState({
-          homeList
+        res.data.forEach((item)=>{
+          const data={
+            id:item._id.toString(),
+            address:item.address,
+            state:item.state,
+            city:item.city,
+            description:item.description,
+            contact:item.contact,
+            price:item.price,
+          }
+          console.log(item.address)
+          let homeList = [...this.state.homeList,data]
+          this.setState({
+            homeList
+          })
         })
-      })
-      console.log(res.data)
+    }).catch((error)=>{
+      alert("nothing uploaded yet");
+       console.log(error.request);
     })
   }
 
@@ -138,16 +147,26 @@ class Profile extends Component{
     axios.delete('http://localhost:5000/deletedata',{params:{id : id } })
     .then((res)=>{
       alert(res.data);
+      this.setState({
+        isDataUploaded : false
+      })
       window.location.reload();
       //  this.handleClick();
     })
   }
-  render(){
 
+  checkData = (e) =>{
+    console.log(e);
+    this.setState({
+      isDataUploaded : true
+    })
+  }
+
+  render(){
     const  homeList  = this.state.homeList;
-    const HomeList = homeList?(homeList.map(arr=>{
+    const HomeList = homeList.length?(homeList.map(arr=>{
       return(
-        <div className='roomlist' key={ arr.id }>
+        <div style = {{paddingTop : "1%" }} key={ arr.id }>
             <Card className={ this.props.classes.card1 }>
               <CardActionArea>
                   <CardMedia className={ this.props.classes.media } image="#" title="room pic"/>
@@ -161,55 +180,84 @@ class Profile extends Component{
                       </Typography>
                   </CardContent>
                   <CardActions>
-                      <Button size="small" color="primary"> Book </Button>
                       <Button size="small" color="primary" onClick={ ()=>this.handleDelete(arr.id) } > Delete </Button>
                   </CardActions>
                </CardActionArea>
             </Card>
-          </div>
+        </div>
       )
-    })):(<p> Loading... </p>)
+    })):(<p> Click On PgList to show data ! </p>)
 
-    return(
-      <div className='container-fluid'>
-        <Button className={this.props.classes.root} onClick={ ()=>this.handleLogout() }>Logout</Button>
-        <Button  className={this.props.classes.root}  onClick={  ()=>{ this.openUpload() } } >Upload</Button>
-        <Button  className={this.props.classes.root} onClick={ ()=>this.handleClick()} >Pglist</Button>
-        <div className="row">
-          <div className='col11 col-sm-3'>
-            <div className='card'>
-              <p>Name:  { this.state.name_1 }</p>
-              <p>Email:  { this.state.email_1 }</p>
-              <p>Contact:  { this.state.contact_1 }</p>
-              <p>Address:  { this.state.permanent_Address_1 }</p>
-              <section>
-              <Button className={this.props.classes.root} onClick={ ()=>this.openUpdate() } >Update</Button>
-                  <Modal visible={this.state.visible} width="400" height="300" effect="fadeInUp" onClickAway={() =>  this.closeUpdate()  }>
-                       <div>
-                          <form onSubmit={ this.handleSubmit } >
-                            Name: <input type="text" id='name_1' value={this.state.name_1} onChange={ this.handleChange }/>
-                            Email: <input type="text" id='email_1' value={this.state.email_1} onChange={ this.handleChange }/>
-                            Contact: <input type="text" id='contact_1' value={this.state.contact_1} onChange={ this.handleChange }/>
-                            Address: <input type="text" id='permanent_Address_1' value={this.state.permanent_Address_1} onChange={ this.handleChange }/>
-                            <input type="submit" value="update" onClick={ ()=>this.closeUpdate() }/>
+    const token = localStorage.getItem('token');
+    const showData = () => {
+      if(JSON.parse(token))
+      { 
+        return (       
+            <div className="row">
+              <div className = "col s12" style = {{marginTop:"1%", backgroundColor:""}}>
+                <Button className={this.props.classes.root} onClick={ ()=>this.handleLogout() }>Logout</Button>
+                <Button  className={this.props.classes.root}  onClick={  ()=>{ this.openUpload() } } >Upload</Button>
+                <Button  className={this.props.classes.root} onClick={ ()=>this.handleClick()} >Pglist</Button>
+              </div>
+              <div className='col s3' style = {{marginTop:"3%", backgroundColor:""}}>
+                <div className='card' >
+                  <div style={{textAlign:"center", textDecorationStyle:"double"}}> 
+                    <p style={{textTransform:"capitalize"}}>Hi  { this.state.name_1 } !</p>
+                    <p>Email :  { this.state.email_1 }</p>
+                    <p>Contact :  { this.state.contact_1 }</p>
+                    <p>Address :  { this.state.permanent_Address_1 }</p>
+                  </div>
+                  <section>
+                  <Button className={this.props.classes.root} style={{marginLeft:"38%"}} onClick={ ()=>this.openUpdate() } >Update</Button>
+                  <Modal visible={this.state.visible} width="400" height="400" effect="fadeInUp" onClickAway={() =>  this.closeUpdate()  }>
+                      <div className = "login">
+                          <form  onSubmit={ this.handleSubmit } >
+                            <div id = "updatePersonalData">
+                              Name : <input type="text" id='name_1' value={this.state.name_1} onChange={ this.handleChange }/>
+                              Email : <input type="text" id='email_1' value={this.state.email_1} onChange={ this.handleChange }/>
+                              Contact : <input type="text" id='contact_1' value={this.state.contact_1} onChange={ this.handleChange }/>
+                              Address : <input type="text" id='permanent_Address_1' value={this.state.permanent_Address_1} onChange={ this.handleChange }/>
+                            </div>
+                            <input type="submit" value="update" onClick={ this.closeUpdate }/>
                           </form>
                       </div>
                   </Modal>
-              </section>
+                  </section>
+                </div>
+              </div>
+              <div className='col s9' style = {{marginTop:"3%", paddingLeft: "10%", backgroundColor:""}}>
+                { HomeList }
+              </div>
+              <UploadPgData  checkData = {this.checkData } Key={ this.state.key } state={ this.state.visibleUpload }  closeUpload={ this.closeUpload } />
             </div>
-          </div>
-          <div className='col22 col-sm-9'>
-            <UploadPgData   Key={ this.state.key } state={ this.state.visibleUpload }  closeUpload={ this.closeUpload } />
-            { HomeList }
-          </div>
-       </div>
-     </div>
-
+        )
+      }else{
+        return <h1 style = {{ textAlign:'center' }} > PLEASE LOGIN TO ACCESS PROFILE DATA !  </h1>
+      }
+    }
+    
+    return(
+      <div>
+        { showData() }
+      </div>
     )
   }
 }
 
-export default withStyles(styles)(Profile);
+const mapStateToProps = (state) =>{
+  return{
+    authToken : state.token
+  }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return{
+    setAuthToken : (data) => {dispatch({ type : 'add', value : data }) }
+  }
+}
+
+const hocProfile =  withStyles(styles)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(hocProfile);
 // export default compose(
 //   withRouter,
 // )(Profile);

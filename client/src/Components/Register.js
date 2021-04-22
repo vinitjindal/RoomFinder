@@ -47,15 +47,17 @@ import { withRouter } from 'react-router-dom';
    }
     render() {
         return (
-                <Modal visible={this.props.state } width="450" height="500" effect="fadeInDown" onClickAway={() =>  this.props.closeSignUp()  }>
+                <Modal visible={this.props.state } width="450" height="540" effect="fadeInDown" onClickAway={() =>  this.props.closeSignUp()  }>
                     <div className='login'>
                         <h4> Register As a Vendor.. </h4>
                         <form  onSubmit={ this.handleSubmit }>
-                          Name:<input type="text"  id="name" value={this.state.name}   onChange={ this.handleChange } required/>
-                          Email:<input type="email"   id="email" value={this.state.email}  onChange={ this.handleChange } required/>
-                          Contact:<input type="number"   id="contact" value={this.state.contact} onChange={ this.handleChange } required/>
-                          Permanent Address:<input type="text"   id="permanent_Address" value={this.state.permanent_Address} onChange={ this.handleChange } required/>
-                          password:<input type="password"  id="password"  value={ this.state.password } onChange={ this.handleChange } required/>
+                          <div id = "registerUser">
+                              Name:<input type="text"  id="name" value={this.state.name}   onChange={ this.handleChange } required/>
+                              Email:<input type="email"   id="email" value={this.state.email}  onChange={ this.handleChange } required/>
+                              Contact:<input type="number"   id="contact" value={this.state.contact} onChange={ this.handleChange } required/>
+                              Permanent Address:<input type="text"   id="permanent_Address" value={this.state.permanent_Address} onChange={ this.handleChange } required/>
+                              Password:<input type="password"  id="password"  value={ this.state.password } onChange={ this.handleChange } required/>
+                          </div>
                           <input type="submit" value="Sign Up"/>
                         </form>
                      </div>

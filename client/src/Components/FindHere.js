@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Search from './Search';
+import axios from 'axios';
 
 
 const styles = {
@@ -60,6 +61,12 @@ class FindHere extends Component{
     });
   }
 
+  componentDidMount = () =>{
+    axios.get('http://localhost:5000/getAllPgList',{}).then((res)=>{
+      
+    })
+  }
+
   searchPg=(info)=>{
     let homeList = this.state.homeList.filter(arr=>{
       return arr.city === info.city && arr.state === info.state;
@@ -79,7 +86,7 @@ class FindHere extends Component{
     const { homeList } = this.state;
     const HomeList = homeList?(homeList.map(arr=>{
       return(
-        <div className='roomlist' key={ arr.id }>
+        <div style = {{paddingTop : "1%",backgroundColor:""}} key={ arr.id }>
             <Card className={ this.props.classes.card }>
               <CardActionArea>
                   <CardMedia className={ this.props.classes.media } image = { arr.img } title="room pic"/>
@@ -101,12 +108,12 @@ class FindHere extends Component{
       )
     })):(<p> Loading </p>)
     return(
-      <div className='row container-fluid'>
-        <div className='col1 col-sm-3'>
+      <div>
+        <div  style = {{paddingLeft:"2%", paddingTop:"2%"}}> 
           <Button className={this.props.classes.root} onClick={ ()=>this.handleClick() } >Search here..</Button>
           <Search closeSearch={ this.closeSearch } state={ this.state.VisibleSearch } addInfo={ this.searchPg }/>
         </div>
-        <div className=' col2 col-sm-9'>
+        <div  style = {{paddingLeft:"30%",backgroundColor:""}}>
           { HomeList }
         </div>
       </div>

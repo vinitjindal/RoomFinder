@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-awesome-modal';
-
+import "./Login.css"
 
  class Search extends Component {
   state={
@@ -9,7 +9,8 @@ import Modal from 'react-awesome-modal';
   }
   handleSubmit=(e)=>{
     e.preventDefault();
-    this.props.addInfo(this.state);
+    if(this.state.state && this.state.city)
+      this.props.addInfo(this.state);
   }
 
   handleChange=(e)=>{
@@ -24,10 +25,10 @@ import Modal from 'react-awesome-modal';
             <section>
                 <Modal visible={this.props.state} width="400" height="300" effect="fadeInUp" onClickAway={() =>  this.props.closeSearch()  }>
                     <div className="bg-image"></div>
-                    <div>
+                    <div className="login">
                         <form onSubmit={ this.handleSubmit } >
-                          <input type="text" id='state' placeholder="Enter state" onChange={ this.handleChange }/>
-                          <input type="text" id='city' placeholder="Enter city" onChange={ this.handleChange }/>
+                          <input type="text" id='state' placeholder="Enter state" onChange={ this.handleChange } />
+                          <input type="text" id='city' placeholder="Enter city" onChange={ this.handleChange } />
                           <input type="submit" value=" Hit Enter " onClick={ ()=>this.props.closeSearch() }/>
                         </form>
                     </div>
