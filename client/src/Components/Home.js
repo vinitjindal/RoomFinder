@@ -1,4 +1,5 @@
 import React,{ Component } from 'react';
+import { Link } from 'react-router-dom';
 import './Home.css';
 
 class Home extends Component{
@@ -9,7 +10,7 @@ class Home extends Component{
             Hello ! Start finding your first room.
           </div>
           <div className = "Bdiv">
-            <input type = "button" className="Fbutton" value = "Explore" />
+            <Link to="/FindHere"><input type = "button" className="Fbutton" value = "Explore" /></Link>
             <input type = "button" className="Fbutton" value = "Login" />
           </div>
           <div className = "home">
