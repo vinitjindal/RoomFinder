@@ -7,7 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Modal from 'react-awesome-modal';
-import UploadPgData from './uploadPgData'
+import UploadPgData from './uploadPgData';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import "./Login.css"
