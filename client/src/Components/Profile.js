@@ -45,7 +45,7 @@ class Profile extends Component{
     visible:false,
     visibleUpload:false,
     homeList:[],
-    isDataUploaded : false
+   // isDataUploaded : false
   }
 
   componentDidMount(){
@@ -59,11 +59,39 @@ class Profile extends Component{
         contact_1:res.data.contact,
         permanent_Address_1:res.data.permanent_Address,
       })
+
+ // for getting all PG's data of a signed In user     
+      console.log('key is ' + this.state.key);
+      axios.post('http://localhost:5000/pglist',{ Key:this.state.key })
+      .then((res)=>{
+          res.data.forEach((item)=>{
+            const data={
+              id:item._id.toString(),
+              address:item.address,
+              state:item.state,
+              city:item.city,
+              description:item.description,
+              contact:item.contact,
+              price:item.price,
+            }
+            console.log(item.address)
+            let homeList = [...this.state.homeList,data]
+            this.setState({
+              homeList
+            })
+          })
+      }).catch((error)=>{
+        alert("nothing uploaded yet");
+          console.log(error.request);
+      })
+
+
     }).catch((err)=>{
       this.props.setAuthToken(null);
       this.props.history.push('/');
       alert('time expires login again !');
     })
+   
   }
 
 
@@ -75,31 +103,31 @@ class Profile extends Component{
     this.props.history.push('/');
   }
 
-  handleClick=(e)=>{
-    //console.log(this.state.key);
-    axios.post('http://localhost:5000/pglist',{ Key:this.state.key })
-    .then((res)=>{
-        res.data.forEach((item)=>{
-          const data={
-            id:item._id.toString(),
-            address:item.address,
-            state:item.state,
-            city:item.city,
-            description:item.description,
-            contact:item.contact,
-            price:item.price,
-          }
-          console.log(item.address)
-          let homeList = [...this.state.homeList,data]
-          this.setState({
-            homeList
-          })
-        })
-    }).catch((error)=>{
-      alert("nothing uploaded yet");
-       console.log(error.request);
-    })
-  }
+  // handleClick=(e)=>{
+  //   //console.log(this.state.key);
+  //   axios.post('http://localhost:5000/pglist',{ Key:this.state.key })
+  //   .then((res)=>{
+  //       res.data.forEach((item)=>{
+  //         const data={
+  //           id:item._id.toString(),
+  //           address:item.address,
+  //           state:item.state,
+  //           city:item.city,
+  //           description:item.description,
+  //           contact:item.contact,
+  //           price:item.price,
+  //         }
+  //         console.log(item.address)
+  //         let homeList = [...this.state.homeList,data]
+  //         this.setState({
+  //           homeList
+  //         })
+  //       })
+  //   }).catch((error)=>{
+  //     alert("nothing uploaded yet");
+  //      console.log(error.request);
+  //   })
+  // }
 
   openUpload=(e)=>{
     this.setState({
@@ -147,20 +175,20 @@ class Profile extends Component{
     axios.delete('http://localhost:5000/deletedata',{params:{id : id } })
     .then((res)=>{
       alert(res.data);
-      this.setState({
-        isDataUploaded : false
-      })
+      // this.setState({
+      //   isDataUploaded : false
+      // })
       window.location.reload();
       //  this.handleClick();
     })
   }
 
-  checkData = (e) =>{
-    console.log(e);
-    this.setState({
-      isDataUploaded : true
-    })
-  }
+  // checkData = (e) =>{
+  //   console.log(e);
+  //   this.setState({
+  //     isDataUploaded : true
+  //   })
+  // }
 
   render(){
     const  homeList  = this.state.homeList;
@@ -186,7 +214,7 @@ class Profile extends Component{
             </Card>
         </div>
       )
-    })):(<p> Click On PgList to show data ! </p>)
+    })):(<p> Nothing uploaded yet ! </p>)
 
     const token = localStorage.getItem('token');
     const showData = () => {
@@ -197,7 +225,7 @@ class Profile extends Component{
               <div className = "col s12" style = {{marginTop:"1%", backgroundColor:""}}>
                 <Button className={this.props.classes.root} onClick={ ()=>this.handleLogout() }>Logout</Button>
                 <Button  className={this.props.classes.root}  onClick={  ()=>{ this.openUpload() } } >Upload</Button>
-                <Button  className={this.props.classes.root} onClick={ ()=>this.handleClick()} >Pglist</Button>
+                {/* <Button  className={this.props.classes.root} onClick={ ()=>this.handleClick()} >Pglist</Button> */}
               </div>
               <div className='col s3' style = {{marginTop:"3%", backgroundColor:""}}>
                 <div className='card' >
@@ -218,7 +246,7 @@ class Profile extends Component{
                               Contact : <input type="text" id='contact_1' value={this.state.contact_1} onChange={ this.handleChange }/>
                               Address : <input type="text" id='permanent_Address_1' value={this.state.permanent_Address_1} onChange={ this.handleChange }/>
                             </div>
-                            <input type="submit" value="update" onClick={ this.closeUpdate }/>
+                            <input type="submit" value="submit" onClick={ this.closeUpdate }/>
                           </form>
                       </div>
                   </Modal>
@@ -228,7 +256,7 @@ class Profile extends Component{
               <div className='col s9' style = {{marginTop:"3%", paddingLeft: "10%", backgroundColor:""}}>
                 { HomeList }
               </div>
-              <UploadPgData  checkData = {this.checkData } Key={ this.state.key } state={ this.state.visibleUpload }  closeUpload={ this.closeUpload } />
+              <UploadPgData   Key={ this.state.key } state={ this.state.visibleUpload }  closeUpload={ this.closeUpload } />
             </div>
         )
       }else{

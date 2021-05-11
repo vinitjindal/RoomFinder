@@ -87,7 +87,6 @@ class Navbar extends Component {
      return (
       <div>
           <nav className=" nav-wrapper  darken-2">
-            {/* <div id="homelogo"><Link to='/'><i className="fa fa-home" ></i></Link></div> */}
             <div id="home">
               <Link to='/' className='brand-logo' style={{backgroundColor:""}}><i className="fa fa-home"></i>OurRoom</Link>
             </div>

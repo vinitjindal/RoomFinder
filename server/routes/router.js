@@ -161,6 +161,7 @@ router.put('/editprofile',(req,res,next)=>{
 })
 
 router.post('/uploadPgData',(req,res,next)=>{
+  console.log('header is ' + req.body);
   vendor.create(req.body).then((data) => {
      res.send("succesfully submitted !");
   }).catch((err)=>{

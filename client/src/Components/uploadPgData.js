@@ -16,7 +16,7 @@ class UploadPgData extends Component{
       city:"",
       description:"",
       pg_contact:"",
-      price:"",
+      price:""
 
     };
  }
@@ -30,11 +30,14 @@ class UploadPgData extends Component{
 
  handleSubmit=(e)=>{
     e.preventDefault();
+    
    axios.post('http://localhost:5000/uploadPgData',{ key:this.props.Key, address:this.state.address,
      state:this.state.state, city:this.state.city, description:this.state.description,
      contact:this.state.pg_contact, price:this.state.price })
      .then((res)=>{
        alert(res.data);
+       console.log(res);
+       alert('send');
        this.setState({
          address:"",
          state:"",
@@ -43,7 +46,8 @@ class UploadPgData extends Component{
          pg_contact:"",
          price:"",
        })
-       this.props.checkData();
+      // this.props.checkData();
+       window.location.reload();
      })
  }
 
@@ -51,7 +55,7 @@ class UploadPgData extends Component{
     return(
       <div>
         <section>
-             <Modal visible={this.props.state} width="400" height="570" effect="fadeInUp" onClickAway={() =>  this.props.closeUpload()  }>
+             <Modal visible={this.props.state} width="400" height="630" effect="fadeInUp" onClickAway={() =>  this.props.closeUpload()  }>
                  <div className = "login">
                     <form  onSubmit={ this.handleSubmit } >
                       <div id = "uploadPgData" >
@@ -61,6 +65,8 @@ class UploadPgData extends Component{
                           description: <input type="text" id='description' value={this.state.description} onChange={ this.handleChange }/>
                           Contact: <input type="number" id='pg_contact' value={this.state.pg_contact} onChange={ this.handleChange }/>
                           Price: <input type="number" id='price' value={this.state.price} onChange={ this.handleChange }/>
+                          {/* <label for="img">Select images for upload:</label>
+                          <input type="file" id="image" name="img" accept="image/*"/> */}
                       </div>
                       <input type="submit" value="submit" onClick = {() =>  this.props.closeUpload()}/>
                     </form>
